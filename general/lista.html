@@ -26,7 +26,7 @@
       .then(str => {
         const parser = new DOMParser();
         const xml = parser.parseFromString(str, "application/xml");
-        const juegos = xml.getElementsByTagName("boardgame");
+        const juegos = xml.getElementsByTagName("boardgames");
 
         const lista = document.getElementById("listajuegos");
         for (let juego of juegos) {
