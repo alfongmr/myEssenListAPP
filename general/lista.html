@@ -6,16 +6,16 @@
       .then(str => {
         const parser = new DOMParser();
         const xml = parser.parseFromString(str, "application/xml");
-        const libros = xml.getElementsByTagName("libro");
+        const juegos = xml.getElementsByTagName("boardgame");
 
-        const lista = document.getElementById("listaLibros");
-        for (let libro of libros) {
-          const nombre = libro.getElementsByTagName("nombre")[0].textContent;
-          const editorial = libro.getElementsByTagName("editorial")[0].textContent;
-          const precio = libro.getElementsByTagName("Precio")[0].textContent;
+        const lista = document.getElementById("listajuegos");
+        for (let juego of juegos) {
+          const nombre = juego.getElementsByTagName("name")[0].textContent;
+          const editorial = juego.getElementsByTagName("editorial")[0].textContent;
+          const price = juego.getElementsByTagName("price")[0].textContent;
 
           const li = document.createElement("li");
-          li.textContent = `${nombre} (${editorial}) - €${precio}`;
+          li.textContent = `${nombre} (${editorial}) - €${price}`;
           lista.appendChild(li);
         }
       })
