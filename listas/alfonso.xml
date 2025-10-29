@@ -1,1 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<boardgames>
+    <boardgame>
+        <id>1</id>
+        <name>Age of Galaxy</name>
+        <editorial>Portal Games</editorial>
+        <link>https://boardgamegeek.com/boardgame/437383/age-of-galaxy-second-edition</link>
+        <photo>https://cf.geekdo-images.com/M6tQ8rCB09ryMmTq5Fopbw__imagepage/img/UjOdJfCbladuHY7fcPmBATrl2tE=/fit-in/900x600/filters:no_upscale():strip_icc()/pic8654473.jpg</photo>
+        <rating>4.8</rating>
+        <hall>3</hall>
+        <Localization>3-J120</Localization>
+        <Price>28,00</Price>
+        <Status>Preordenado</Status>
+        <Paid>No</Paid>
+        <Pickup>No</Pickup>
+        <view>Yes</view>
+    </boardgame>
+    <boardgame>
+        <id>2</id>
+        <name>Aquaria</name>
+        <editorial>Delicious Games</editorial>
+        <link>https://boardgamegeek.com/boardgame/443932/aquaria</link>
+        <photo></photo>
+        <rating>5</rating>
+        <hall>4</hall>
+        <Localization>4-B425</Localization>
+        <Price>60,00</Price>
+        <Status>Comprado</Status>
+        <Paid>No</Paid>
+        <Pickup>No</Pickup>
+        <view>No</view>
+    </boardgame>
+</libros>
 
