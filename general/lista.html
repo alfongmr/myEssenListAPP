@@ -1,0 +1,23 @@
+  <script>
+    const xmlUrl = "https://alfongmr.github.io/listas/alfonso.xml"; // Cambia esta URL
+
+    fetch(xmlUrl)
+      .then(response => response.text())
+      .then(str => {
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(str, "application/xml");
+        const libros = xml.getElementsByTagName("libro");
+
+        const lista = document.getElementById("listaLibros");
+        for (let libro of libros) {
+          const nombre = libro.getElementsByTagName("nombre")[0].textContent;
+          const editorial = libro.getElementsByTagName("editorial")[0].textContent;
+          const precio = libro.getElementsByTagName("Precio")[0].textContent;
+
+          const li = document.createElement("li");
+          li.textContent = `${nombre} (${editorial}) - €${precio}`;
+          lista.appendChild(li);
+        }
+      })
+      .catch(err => console.error("Error cargando XML:", err));
+  </script>
