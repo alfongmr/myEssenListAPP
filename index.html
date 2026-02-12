@@ -1,85 +1,67 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Buscar Juegos de Mesa</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
-    .search-container { position: relative; width: 300px; margin-bottom: 20px; }
-    input[type="text"] {
-      width: 100%; padding: 10px 40px 10px 10px; font-size: 16px;
-      border-radius: 20px; border: 1px solid #ccc;
-    }
-    button {
-      position: absolute; right: 5px; top: 50%;
-      transform: translateY(-50%);
-      background: none; border: none; cursor: pointer;
-    }
-    button img { width: 20px; height: 20px; }
-    ul { list-style: none; padding: 0; }
-    li { margin-bottom: 10px; }
-  </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Buscador BGG (XML API2)</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <h1>Buscar Juegos de Mesa</h1>
+  <header class="container">
+    <h1>Buscador BoardGameGeek</h1>
+    <p class="muted">
+      Fuente: BGG XML API2 (<a href="https://boardgamegeek.com/wiki/page/BGG_XML_API2" target="_blank" rel="noopener">doc</a>)
+    </p>
+  </header>
 
-  <div class="search-container">
-    <input type="text" id="searchBox" placeholder="Buscar juego...">
-    <button id="searchBtn">
-      <img src="https://cdn-icons-png.flaticon.com/512/622/622669.png" alt="Lupa">
-    </button>
-  </div>
+  <main class="container">
+    <section class="card">
+      <form id="searchForm" aria-label="Formulario de búsqueda BGG">
+        <div class="grid">
+          <div>
+            <label for="query">Término de búsqueda</label>
+            <input id="query" name="query" type="text" placeholder="Ej: catan" required />
+          </div>
+          <div>
+            <label for="type">Tipo</label>
+            <select id="type" name="type">
+              <option value="">Todos</option>
+              <option value="boardgame">Boardgame</option>
+              <option value="boardgameexpansion">Expansion</option>
+              <option value="boardgameaccessory">Accessory</option>
+              <option value="videogame">Videogame</option>
+              <option value="rpgitem">RPG Item</option>
+            </select>
+          </div>
+          <div>
+            <label for="exact">Coincidencia exacta</label>
+            <input id="exact" name="exact" type="checkbox" />
+          </div>
+        </div>
+        <div class="actions">
+          <button type="submit">Buscar</button>
+          <button type="button" id="clearBtn" class="secondary">Limpiar</button>
+        </div>
+      </form>
+    </section>
 
-  <ul id="results"></ul>
+    <section id="status" role="status" class="muted"></section>
 
-  <script>
-    const searchBox = document.getElementById("searchBox");
-    const searchBtn = document.getElementById("searchBtn");
-    const resultsList = document.getElementById("results");
+    <section id="results" class="grid-cards" aria-live="polite"></section>
 
-    // Proxy para evitar problemas de CORS (solo para pruebas)
-    const proxy = "https://api.allorigins.win/raw?url=";
+    <nav id="pager" class="pager hidden" aria-label="Paginación">
+      <button id="prevPage" disabled>Anterior</button>
+      <span id="pageInfo"></span>
+      <button id="nextPage" disabled>Siguiente</button>
+    </nav>
+  </main>
 
-    function searchGames(query) {
-      const url = `https://boardgamegeek.com/xmlapi2/search?query=${encodeURIComponent(query)}&type=boardgame`;
-      fetch(proxy + encodeURIComponent(url))
-        .then(response => response.text())
-        .then(str => {
-          const parser = new DOMParser();
-          const xml = parser.parseFromString(str, "application/xml");
-          const items = xml.getElementsByTagName("item");
-          resultsList.innerHTML = "";
+  <footer class="container muted">
+    <small>
+      Datos obtenidos de BGG XML API2. Considera su <em>rate limit</em> (esperas ~5 s si haces múltiples llamadas seguidas). [1](https://boardgamegeek.com/wiki/page/BGG_XML_API2)
+    </small>
+  </footer>
 
-          if(items.length === 0) {
-            resultsList.innerHTML = "<li>No se encontraron juegos</li>";
-          }
-
-          for (let item of items) {
-            const name = item.getElementsByTagName("name")[0].getAttribute("value");
-            const id = item.getAttribute("id");
-
-            const li = document.createElement("li");
-            li.innerHTML = `<a href="https://boardgamegeek.com/boardgame/${id}" target="_blank">${name}</a>`;
-            resultsList.appendChild(li);
-          }
-        })
-        .catch(err => console.error("Error al buscar:", err));
-    }
-
-    searchBtn.addEventListener("click", () => {
-      const query = searchBox.value.trim();
-      if(query) searchGames(query);
-    });
-
-    searchBox.addEventListener("keypress", e => {
-      if(e.key === "Enter") searchBtn.click();
-    });
-  </script>
-  
-<nav>
-  <a href="general/lista.html">Lista Essen Alfon</a>
-  <a href="contacto.html">Contacto</a>
-</nav>
+  <script src="app.js" type="module"></script>
 </body>
-  
 </html>
